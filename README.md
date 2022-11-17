@@ -1,6 +1,6 @@
 # Web-app-testing-list
 
-## **HTTP Host header attacks ==================== **  
+## HTTP Host header attacks ====================   
 ### Password reset poisoning
 We visit https://example.com/security, browser will compose a request containing a Host header:
 > GET /security HTTP/1.1  
