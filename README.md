@@ -1,6 +1,6 @@
 # Web-app-testing-list
 
-## HTTP Host header attacks ====================    
+## HTTP Host header attacks =======================================  
 We visit https://example.com/security, browser will compose a request containing a Host header:
 > GET /security HTTP/1.1  
 > Host: example.com  
@@ -9,10 +9,11 @@ When a browser sends the request, URL will resolve to the IP address of server. 
 
 ### Password reset poisoning
 Changing header Host: from legit to our malicious domain to obtain password reset link which include the unique reset token.   
-1.) In Burp "POST /forgot-password" request body the username parameter  
-2.) Change the Host: header to your exploit server's domain name  
-3.) In malicious servers access.log obtain reset token  
-4.) In Burp use genuine password reset link from email, but change token parametre in URL.  
->/forgot-password?temp-forgot-password-token=S0j4fkc7y9M9AgAPXu8kDsNG1pT9kPZ4  
+1.) In Burp "POST /forgot-password" request body change the username parameter and change the Host: header to your exploit server's domain name  
+2.) In malicious servers access.log obtain reset token  
+3.) In Burp use our acc genuine password reset link from email, but change token parametre in URL.  
+>/forgot-password?temp-forgot-password-token=S0j4fkc7y9M9AgAPXu8kDsNG1pT9kPZ4    
+
+### Host header authentication bypass
 
 
