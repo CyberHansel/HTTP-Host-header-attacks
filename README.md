@@ -7,8 +7,8 @@ We visit https://example.com/security, browser will compose a request containing
 
 The purpose of the HTTP Host header is to help identify which back-end component the client wants to communicate with and route request to right application.  
 * Possible scenario is when a single web server hosts multiple websites or applications.
-* When websites are hosted on distinct back-end servers and all traffic between the client and servers is routed through an intermediary system like load balancer or  reverse proxy server. This setup is especially prevalent in cases where clients access the website via a content delivery network (CDN).
-* 
+* When websites are hosted on distinct back-end servers and all traffic between the client and servers is routed through an intermediary system like load balancer or  reverse proxy server (they need to know on which back-end server to route requests). This setup is especially prevalent in cases where clients access the website via a content delivery network (CDN).  
+Problem is when server implicitly trusts the Host header, and fails to validate or escape it properly
 
 ### Password reset poisoning
 Changing header Host: from legit to our malicious domain to obtain password reset link which include the unique reset token.   
