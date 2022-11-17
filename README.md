@@ -5,7 +5,10 @@ We visit https://example.com/security, browser will compose a request containing
 > GET /security HTTP/1.1  
 > Host: example.com  
 
-When a browser sends the request, URL will resolve to the IP address of server. When server receives the request, it refers to the Host header to determine the intended back-end and forwards the request accordingly to us.   
+The purpose of the HTTP Host header is to help identify which back-end component the client wants to communicate with and route request to right application.  
+* Possible scenario is when a single web server hosts multiple websites or applications.
+* When websites are hosted on distinct back-end servers and all traffic between the client and servers is routed through an intermediary system like load balancer or  reverse proxy server. This setup is especially prevalent in cases where clients access the website via a content delivery network (CDN).
+* 
 
 ### Password reset poisoning
 Changing header Host: from legit to our malicious domain to obtain password reset link which include the unique reset token.   
@@ -16,10 +19,12 @@ Changing header Host: from legit to our malicious domain to obtain password rese
 
 ### Host header authentication bypass - change "Host: localhost"
 If we can change Host: header to any value and still successfully access the home page.  
-1.) at robots.txt is an /admin.  
+1.) robots.txt includes an /admin.  
 2.) We cant access /admin, theres error message "Admin interface only available to local users"  
 3.) In Burp change Host: header to localhost  
 > Host: localhost  
 
+### Web cache poisoning via ambiguous requests
+sd
 
 
