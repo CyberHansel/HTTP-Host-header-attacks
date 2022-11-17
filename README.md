@@ -26,12 +26,14 @@ If we can change Host: header to any value and still successfully access the hom
 > Host: localhost  
 
 ### Web cache poisoning via ambiguous requests
-To reduce latency cache sits between the back-end server and the user where it saves (caches) the responses to particular requests, usually for a fixed amount of time. If another user sends equivalent request, cache simply serves a copy of the cached response w/o interfering with back-end server.  
-Caches identify  requests by comparing "cache key" (subset of request components). 
+To reduce latency cache sits between the back-end server and the user where it saves (caches) the responses to particular requests, usually for a fixed amount of time. If another user sends equivalent request, cache simply serves a copy of the cached response w/o interfering with back-end server. Caches identify  requests by comparing "cache key" (subset of request components). 
 * Typically: request line and Host header. Components of the request that are not included in the cache key are said to be "unkeyed".  
 * If the cache key of an incoming request matches the key of a previous request cache server will serve a copy of the cached response 
 * Other components of the request are ignored!  
 
+Any web cache poisoning attack relies on manipulation of unkeyed inputs, such as headers  
+
+1.) Identifying unkeyed inputs that are supported by the server  
 
 
 
