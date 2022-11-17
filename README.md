@@ -1,4 +1,4 @@
-# **Web-app-testing-list**
+# Web-app-testing-list
 
 ## **HTTP Host header attacks ==================== **  
 ### Password reset poisoning
