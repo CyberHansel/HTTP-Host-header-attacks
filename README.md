@@ -33,7 +33,7 @@ To reduce latency cache sits between the back-end server and the user where it s
 
 Any web cache poisoning attack relies on manipulation of unkeyed inputs, such as headers  
 
-1.) Identifying unkeyed inputs that are supported by the server  
+1.) Identifying unkeyed inputs that are supported by the server - Burp Comparer to compare the response with and without the injected input or Param Miner Burp extension (When test for unkeyed inputs on a live website, there is a risk of inadvertently causing the cache to serve your generated responses to real users. Therefore, it is important to make sure that your requests all have a unique cache key so that they will only be served to you.)
 
 
 
