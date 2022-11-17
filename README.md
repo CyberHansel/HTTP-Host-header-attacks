@@ -14,6 +14,12 @@ Changing header Host: from legit to our malicious domain to obtain password rese
 3.) In Burp use our acc genuine password reset link from email, but change token parametre in URL.  
 >/forgot-password?temp-forgot-password-token=S0j4fkc7y9M9AgAPXu8kDsNG1pT9kPZ4    
 
-### Host header authentication bypass
+### Host header authentication bypass - change "Host: localhost"
+If we can change Host: header to any value and still successfully access the home page.
+1.) at robots.txt is an /admin.
+2.) We cant access /admin, theres error message "Admin interface only available to local users"
+3.) In Burp change Host: header to localhost  
+> Host: localhost  
+
 
 
