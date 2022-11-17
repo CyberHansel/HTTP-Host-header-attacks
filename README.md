@@ -7,9 +7,9 @@ We visit https://example.com/security, browser will compose a request containing
 
 The purpose of the HTTP Host header is to help identify which back-end component the client wants to communicate with and route request to right application.  
 * Possible scenario is when a single web server hosts multiple websites or applications.
-* When websites are hosted on distinct back-end servers and all traffic between the client and servers is routed through an intermediary system like load balancer or  reverse proxy server (they need to know on which back-end server to route requests). This setup is especially prevalent in cases where clients access the website via a content delivery network (CDN).  
-Problem is when server implicitly trusts the Host header, and fails to validate or escape it properly  
+* When websites are hosted on distinct back-end servers and all traffic between the client and servers is routed through an intermediary system like load balancer or  reverse proxy server (they need to know on which back-end server to route requests). This setup is especially prevalent in cases where clients access the website via a content delivery network (CDN).
 
+Problem is when server implicitly trusts the Host: header, and fails to validate or escape it properly  
 
 ### Password reset poisoning
 Changing header Host: from legit to our malicious domain to obtain password reset link which include the unique reset token.   
@@ -26,6 +26,77 @@ If we can change Host: header to any value and still successfully access the hom
 > Host: localhost  
 
 ### Web cache poisoning via ambiguous requests
-sd
+To reduce latency cache sits between the back-end server and the user where it saves (caches) the responses to particular requests, usually for a fixed amount of time. If another user sends equivalent request, cache simply serves a copy of the cached response w/o interfering with back-end server.  
+Caches identify  requests by comparing "cache key" (subset of request components). 
+* Typically: request line and Host header. Components of the request that are not included in the cache key are said to be "unkeyed".  
+* If the cache key of an incoming request matches the key of a previous request cache server will serve a copy of the cached response 
+* Other components of the request are ignored!  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
