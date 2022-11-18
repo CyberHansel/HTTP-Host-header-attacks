@@ -57,8 +57,22 @@ Cloud-based architectures, load balancers and reverse proxies receive requests a
 ### Host validation bypass via connection state attack
 Poorly implemented HTTP server settings state that Host: header, are identical for all HTTP/1.1 requests. Or servers that only perform thorough validation on the first request they receive over a new connection. In this case, you can potentially bypass this validation by sending an innocent-looking initial request then following up with your malicious one down the same connection.
 
-We know that ar ip 192.168.0.1 is located /admin panel  
-1.) 
+We know that server ip 192.168.0.1 is located /admin panel  
+1.) Make the following adjustments:  
+> Change the path to /admin.  
+> Change Host header to 192.168.0.1.  
+
+Send GET request. Observe that you are simply redirected to the homepage  
+2.) send original / and changed /admin requests to Repeater.  
+3.) Change Connection: from close to keep-alive # allows a single TCP connection to remain open for multiple HTTP requests/responses  
+4.) click on + near tab names -> Create new group add both requests -> dropdown, Send group single connection  
+5.) Obtain data from response:  
+ > action='/admin/delete'  
+ > input required type='text' name='username'  
+ > name="csrf" value="yqPYeZm1xcEgnilkxPXRkfhsTc5CNRFQ"  
+ 
+ 6.) On /admin tab change values and send, so it deletes username.  
+ > 
 
 
 
