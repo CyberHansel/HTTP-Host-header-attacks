@@ -73,7 +73,7 @@ Send GET request. Observe that you are simply redirected to the homepage
  
  6.) On /admin tab: delete all entries, leaving cookie, host and POST, change request to POST, change values and send, so it deletes username.  
 > Content-Type: x-www-form-urlencoded  
-> Content-Length:57  
+> Content-Length:53  
 > csrf=yqPYeZm1xcEgnilkxPXRkfhsTc5CNRFQ&username=carlos  
 
 
