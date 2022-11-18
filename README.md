@@ -54,21 +54,21 @@ Exploit file: /resources/js/tracking.js and body alert(document.cookie)
 
 Cloud-based architectures, load balancers and reverse proxies receive requests and forward them to the appropriate back-end. If they are insecurely configured to forward requests based on an unvalidated Host header, they can be manipulated into misrouting requests.
 
-### Routing-based SSRF - Host header SSRF attacks
-
 ### Host validation bypass via connection state attack
 Poorly implemented HTTP server settings state that Host: header, are identical for all HTTP/1.1 requests. Or servers that only perform thorough validation on the first request they receive over a new connection. In this case, you can potentially bypass this validation by sending an innocent-looking initial request then following up with your malicious one down the same connection.
 
+We know that ar ip 192.168.0.1 is located /admin panel  
+1.) 
 
 
 
-
+### Routing-based SSRF - Host header SSRF attacks
 
 ----------------------
 How to prevent HTTP Host header attacks
 To prevent HTTP Host header attacks, the simplest approach is to avoid using the Host header altogether in server-side code. Double-check whether each URL really needs to be absolute. You will often find that you can just use a relative URL instead. This simple change can help you prevent web cache poisoning vulnerabilities in particular.
 
-Other ways to prevent HTTP Host header attacks include:
+### Prevent HTTP Host header attacks:
 
 Protect absolute URLs
 When you have to use absolute URLs, you should require the current domain to be manually specified in a configuration file and refer to this value instead of the Host header. This approach would eliminate the threat of password reset poisoning, for example.
