@@ -71,7 +71,8 @@ Send GET request. Observe that you are simply redirected to the homepage
  > input required type='text' name='username'  
  > name="csrf" value="yqPYeZm1xcEgnilkxPXRkfhsTc5CNRFQ"  
  
- 6.) On /admin tab change values and send, so it deletes username.  
+ 6.) On /admin tab: delete all entries, leaving cookie, host and POST, change request to POST, change values and send, so it deletes username.  
+ > csrf=yqPYeZm1xcEgnilkxPXRkfhsTc5CNRFQ&username=carlos  
  > 
 
 
