@@ -54,6 +54,8 @@ Exploit file: /resources/js/tracking.js and body alert(document.cookie)
 
 Cloud-based architectures, load balancers and reverse proxies receive requests and forward them to the appropriate back-end. If they are insecurely configured to forward requests based on an unvalidated Host header, they can be manipulated into misrouting requests.
 
+### Routing-based SSRF - Host header SSRF attacks
+
 ### Host validation bypass via connection state attack
 Poorly implemented HTTP server settings state that Host: header, are identical for all HTTP/1.1 requests. Or servers that only perform thorough validation on the first request they receive over a new connection. In this case, you can potentially bypass this validation by sending an innocent-looking initial request then following up with your malicious one down the same connection.
 
@@ -76,10 +78,10 @@ Send GET request. Observe that you are simply redirected to the homepage
 > Content-Length:53  
 > csrf=yqPYeZm1xcEgnilkxPXRkfhsTc5CNRFQ&username=carlos  
 
+### 
 
 
 
-### Routing-based SSRF - Host header SSRF attacks
 
 ----------------------
 How to prevent HTTP Host header attacks
