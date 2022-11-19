@@ -1,4 +1,4 @@
-# Web-app-testing-list
+# HTTP Host header attacks
 
 ## HTTP Host header attacks =======================================  
 We visit https://example.com/security, browser will compose a request containing a Host header:
